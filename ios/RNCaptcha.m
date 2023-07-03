@@ -33,11 +33,11 @@ RCT_EXPORT_METHOD(init:(NSDictionary *)options)
             int timeout = [[options objectForKey:@"timeout"] intValue] / 1000;
             NSString *language_type = [options objectForKey:@"language_type"];
             float dimAmount = [[options objectForKey:@"dimAmount"] floatValue];
-            if (is_no_sense_mode) {
-                self.manager.mode = NTESVerifyCodeBind;
-            } else {
-                self.manager.mode = NTESVerifyCodeNormal;
-            }
+            // if (is_no_sense_mode) {
+            //     self.manager.mode = NTESVerifyCodeBind;
+            // } else {
+            //     self.manager.mode = NTESVerifyCodeNormal;
+            // }
             [self.manager enableLog:debug];
             self.manager.fallBackCount = failed_max_retry_count;
             self.manager.openFallBack = use_default_fallback;
