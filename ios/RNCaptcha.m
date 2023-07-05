@@ -33,11 +33,11 @@ RCT_EXPORT_METHOD(init:(NSDictionary *)options)
             int timeout = [[options objectForKey:@"timeout"] intValue] / 1000;
             NSString *language_type = [options objectForKey:@"language_type"];
             float dimAmount = [[options objectForKey:@"dimAmount"] floatValue];
-            // if (is_no_sense_mode) {
-            //     self.manager.mode = NTESVerifyCodeBind;
-            // } else {
-            //     self.manager.mode = NTESVerifyCodeNormal;
-            // }
+             if (is_no_sense_mode) {
+                 self.manager.mode = NTESVerifyCodeBind;
+             } else {
+                 self.manager.mode = NTESVerifyCodeNormal;
+             }
             [self.manager enableLog:debug];
             self.manager.fallBackCount = failed_max_retry_count;
             self.manager.openFallBack = use_default_fallback;
@@ -69,10 +69,10 @@ RCT_EXPORT_METHOD(init:(NSDictionary *)options)
                 
             }
             
-            int refreshInterval = [[options objectForKey:@"refreshInterval"] intValue];
-            if (refreshInterval > 0) {
-                self.manager.refreshInterval = refreshInterval;
-            }
+//            int refreshInterval = [[options objectForKey:@"refreshInterval"] intValue];
+//            if (refreshInterval > 0) {
+//                self.manager.refreshInterval = refreshInterval;
+//            }
             
             if ([userInterfaceStyle isKindOfClass:[NSString class]]) {
                 if ([userInterfaceStyle isEqualToString:@"light"]) {
@@ -322,7 +322,12 @@ RCT_EXPORT_METHOD(showCaptcha)
 
 - (NSArray<NSString *> *)supportedEvents
 {
-  return @[@"onError", @"onSuccess", @"onCancel"];
+  return @[@"onFinish", @"onError", @"onSuccess", @"onCancel"];
+}
+- (void)verifyCodeInitFinish{
+    NSLog(@"收到初始化完成的回调");
+    [self sendEventWithName:@"onFinish" body:@{@"message": @"初始化完成"}];
+    
 }
 
 /**
